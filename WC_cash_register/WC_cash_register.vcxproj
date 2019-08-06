@@ -139,14 +139,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Add_Tax.cpp" />
     <ClCompile Include="Cash_register_UI.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Add_Tax.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Cash_register_UI.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Add_Tax.resx">
+      <DependentUpon>Add_Tax.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cash_register_UI.resx">
       <DependentUpon>Cash_register_UI.h</DependentUpon>
     </EmbeddedResource>

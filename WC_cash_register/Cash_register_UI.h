@@ -1,4 +1,5 @@
 #pragma once
+#include "Add_Tax.h"
 
 namespace WCcashregister {
 
@@ -14,6 +15,20 @@ namespace WCcashregister {
 	/// </summary>
 	public ref class Cash_register_UI : public System::Windows::Forms::Form
 	{
+	public:
+		String^ Tax_Val;
+
+	public:
+		Cash_register_UI(String^ tax_rate)
+		{
+			InitializeComponent();
+
+			Tax_Val = tax_rate;
+			//
+			//TODO: Add the constructor code here
+			//
+		}
+
 	public:
 		Cash_register_UI(void)
 		{
@@ -361,6 +376,7 @@ namespace WCcashregister {
 			this->button16->TabIndex = 14;
 			this->button16->Text = L"Tax";
 			this->button16->UseVisualStyleBackColor = true;
+			this->button16->Click += gcnew System::EventHandler(this, &Cash_register_UI::button16_Click);
 			// 
 			// pictureBox1
 			// 
@@ -480,7 +496,7 @@ namespace WCcashregister {
 			this->Controls->Add(this->button1);
 			this->Name = L"Cash_register_UI";
 			this->Text = L"Cash_register_UI";
-			this->Click += gcnew System::EventHandler(this, &Cash_register_UI::Operations);
+			this->Load += gcnew System::EventHandler(this, &Cash_register_UI::Cash_register_UI_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -496,6 +512,7 @@ namespace WCcashregister {
 		double second_num;
 		double result;
 		String^ operators;
+		String^ tax;
 
 private: System::Void Buttons_clicked(System::Object^  sender, System::EventArgs^  e) {
 	Button ^ Numbers = safe_cast<Button^>(sender);
@@ -555,6 +572,19 @@ private: System::Void button12_Click(System::Object^  sender, System::EventArgs^
 	if (!textBox1->Text->Contains("."))
 	{
 		textBox1->Text = textBox1->Text + ".";
+	}
+}
+
+private: System::Void Cash_register_UI_Load(System::Object^  sender, System::EventArgs^  e) {
+	textBox1->Text = Tax_Val;
+}
+
+private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (textBox1->Text == "0");
+	else
+	{
+		Add_Tax^ new_window = gcnew Add_Tax();
+		new_window->ShowDialog();
 	}
 }
 
