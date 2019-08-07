@@ -1,5 +1,7 @@
 #pragma once
 #include "Add_Tax.h"
+#include "Discount.h"
+#include <math.h>
 
 namespace WCcashregister {
 
@@ -301,7 +303,7 @@ namespace WCcashregister {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Monotype Corsiva", 50.25F, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
 				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(667, 9);
+			this->label1->Location = System::Drawing::Point(667, 20);
 			this->label1->Name = L"label1";
 			this->label1->Size = System::Drawing::Size(568, 82);
 			this->label1->TabIndex = 15;
@@ -340,6 +342,7 @@ namespace WCcashregister {
 			this->button17->TabIndex = 15;
 			this->button17->Text = L"Discount";
 			this->button17->UseVisualStyleBackColor = true;
+			this->button17->Click += gcnew System::EventHandler(this, &Cash_register_UI::button17_Click);
 			// 
 			// button15
 			// 
@@ -369,7 +372,7 @@ namespace WCcashregister {
 			this->pictureBox1->Image = (cli::safe_cast<System::Drawing::Image^>(resources->GetObject(L"pictureBox1.Image")));
 			this->pictureBox1->Location = System::Drawing::Point(667, 105);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(568, 414);
+			this->pictureBox1->Size = System::Drawing::Size(568, 413);
 			this->pictureBox1->SizeMode = System::Windows::Forms::PictureBoxSizeMode::Zoom;
 			this->pictureBox1->TabIndex = 18;
 			this->pictureBox1->TabStop = false;
@@ -461,11 +464,10 @@ namespace WCcashregister {
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label3->Location = System::Drawing::Point(928, 545);
+			this->label3->Location = System::Drawing::Point(676, 556);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(54, 25);
+			this->label3->Size = System::Drawing::Size(0, 25);
 			this->label3->TabIndex = 21;
-			this->label3->Text = L"Here";
 			// 
 			// Cash_register_UI
 			// 
@@ -492,8 +494,10 @@ namespace WCcashregister {
 			this->Controls->Add(this->button3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->button1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"Cash_register_UI";
-			this->Text = L"Cash_register_UI";
+			this->Text = L"Sanger Women\'s Club POS logger";
+			this->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Cash_register_UI::Exit_Program);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -537,6 +541,7 @@ private: System::Void Operations(System::Object^  sender, System::EventArgs^  e)
 private: System::Void button10_Click(System::Object^  sender, System::EventArgs^  e) {
 	textBox->Text = "0";
 	label2->Text = "";
+	label3->Text = "";
 }
 
 private: System::Void button22_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -573,12 +578,14 @@ private: System::Void button12_Click(System::Object^  sender, System::EventArgs^
 }
 
 // More variables - Passing data between forms
-private: Add_Tax^ AT;	
-double tax_rate;
-double res_with_tax;
-bool Tax_pressed = false;
+private: Add_Tax^ AT;
+private: Discount^ Dis;
 
-private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
+double tax_rate, discount_rate;
+double res_with_tax, res_with_discount;
+bool Tax_pressed, Discount_pressed = false;
+
+private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) { 
 	if (textBox->Text == "0");	// Do not open Tax window if value on calculator is $0.00
 	else
 	{
@@ -604,13 +611,60 @@ private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, Strin
 
 		res_with_tax = (result + (result * tax_rate));
 
+		// Round to $ amount
+		res_with_tax = ((int)(res_with_tax * 100 + .5) / 100.0);
+
 		// Display added tax
-		this->label3->Text = "Tax added to total: " + (result * tax_rate);
-		this->textBox->Text = Convert::ToString(res_with_tax);
+		this->label3->Text = "Tax added to total: $" + (result * tax_rate);
+		this->textBox->Text = "$" + Convert::ToString(res_with_tax);
+		
+		Tax_pressed = false;
+	}
+	else if (Discount_pressed == true)
+	{
+		discount_rate = Convert::ToDouble(text);
+		discount_rate /= 100;
+		result = Convert::ToDouble(textBox->Text);
+
+		res_with_discount = (result - (result * discount_rate));
+
+		// Round to $ amount
+		res_with_discount = ((int)(res_with_discount * 100 + .5) / 100.0);
+
+		// Display added tax
+		this->label3->Text = "Discount reduced from total: $" + (result * discount_rate);
+		this->textBox->Text = "$" + Convert::ToString(res_with_discount);
+
+		Discount_pressed = false;
 	}
 
 
 	}
 
+private: System::Void button17_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (textBox->Text == "0");	// Do not open Discount window if value on calculator is $0.00
+	else
+	{
+		this->Dis = gcnew Discount();
+
+		// Main becomes subscriber to child window
+		this->Dis->myEvent2 += gcnew Discount::EventDelegate2(this, &WCcashregister::Cash_register_UI::mySubscriber1a);
+		this->Dis->Show();
+
+		Discount_pressed = true;
+	}
+}
+
+private: System::Void Exit_Program(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+	if (MessageBox::Show("Are you sure you want to exit?", "Sanger Women's Club POS logger", MessageBoxButtons::YesNo, MessageBoxIcon::Warning) == System::Windows::Forms::DialogResult::Yes)
+	{
+		MessageBox::Show("Thank you for using NCompEng Technologies!!!");
+		Application::ExitThread();
+	}
+	else
+	{
+		e->Cancel = true;	// Cancel the shutdown
+	}
+}
 };
 }

@@ -141,12 +141,16 @@
   <ItemGroup>
     <ClCompile Include="Add_Tax.cpp" />
     <ClCompile Include="Cash_register_UI.cpp" />
+    <ClCompile Include="Discount.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Tax.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Cash_register_UI.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Discount.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -156,6 +160,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cash_register_UI.resx">
       <DependentUpon>Cash_register_UI.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Discount.resx">
+      <DependentUpon>Discount.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
