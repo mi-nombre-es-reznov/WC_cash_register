@@ -1,5 +1,4 @@
 #pragma once
-//#include "Cash_register_UI.h"
 
 namespace WCcashregister {
 
@@ -15,6 +14,11 @@ namespace WCcashregister {
 	/// </summary>
 	public ref class Add_Tax : public System::Windows::Forms::Form
 	{
+	// Public events (using delegates) are declared here in order to publish strings 
+	// for the subscriber (main form) who listens to these events
+	public: delegate void EventDelegate1(System::Object^ sender, System::EventArgs^ e, String^ message);	// Publish an event with a text message that others can subscribe to
+	public: event EventDelegate1^ myEvent1;
+
 	public:
 		Add_Tax(void)
 		{
@@ -72,6 +76,7 @@ namespace WCcashregister {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Cancel";
 			this->button1->UseVisualStyleBackColor = true;
+			this->button1->Click += gcnew System::EventHandler(this, &Add_Tax::button1_Click);
 			// 
 			// textBox1
 			// 
@@ -110,6 +115,7 @@ namespace WCcashregister {
 			this->button2->TabIndex = 4;
 			this->button2->Text = L"Submit";
 			this->button2->UseVisualStyleBackColor = true;
+			this->button2->Click += gcnew System::EventHandler(this, &Add_Tax::button2_Click);
 			// 
 			// label3
 			// 
@@ -135,16 +141,50 @@ namespace WCcashregister {
 			this->Controls->Add(this->button1);
 			this->Name = L"Add_Tax";
 			this->Text = L"Add_Tax";
+			this->Load += gcnew System::EventHandler(this, &Add_Tax::Add_Tax_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-//private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-//	Cash_register_UI ^ form = gcnew Cash_register_UI(textBox1->Text);
-//	this->Hide();
-//	form->ShowDialog();
-//	this->Show();
-//}
+double verify;
+
+private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
+	this->Close();
+}
+
+private: System::Void Add_Tax_Load(System::Object^  sender, System::EventArgs^  e) {
+	this->textBox1->Text = "0";
+}
+
+public: void issueEvent1(System::Object^ sender, System::EventArgs^ e)	// This is where we publish the event to all.
+{
+	this->myEvent1(this, e, this->textBox1->Text);	// Raise the event using event delegate signature
+}
+
+private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (textBox1->Text == "0")	// Give a message of whether tax was added (requires > 0%) for a tax added message.
+	{
+		MessageBox::Show("Tax has not been added!");
+	}
+	else
+	{
+		do
+		{
+			verify = Convert::ToDouble(textBox1->Text);
+
+			if (verify > 0 && verify <= 100)
+			{
+				this->issueEvent1(sender, e);
+				this->Close();	// Close the Tax window
+			}
+			else
+			{
+				MessageBox::Show("Please enter a percentage: 0 -> 100 (inclusive)");
+			}
+		} while (verify < 0 && verify > 100);
+	}
+}
+
 };
 }

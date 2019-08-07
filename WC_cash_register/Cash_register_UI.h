@@ -16,20 +16,6 @@ namespace WCcashregister {
 	public ref class Cash_register_UI : public System::Windows::Forms::Form
 	{
 	public:
-		String^ Tax_Val;
-
-	public:
-		Cash_register_UI(String^ tax_rate)
-		{
-			InitializeComponent();
-
-			Tax_Val = tax_rate;
-			//
-			//TODO: Add the constructor code here
-			//
-		}
-
-	public:
 		Cash_register_UI(void)
 		{
 			InitializeComponent();
@@ -62,7 +48,8 @@ namespace WCcashregister {
 	private: System::Windows::Forms::Button^  button10;
 	private: System::Windows::Forms::Button^  button11;
 	private: System::Windows::Forms::Button^  button12;
-	private: System::Windows::Forms::TextBox^  textBox1;
+	private: System::Windows::Forms::TextBox^  textBox;
+
 	private: System::Windows::Forms::Button^  button13;
 	private: System::Windows::Forms::Button^  button14;
 	private: System::Windows::Forms::Label^  label1;
@@ -79,9 +66,7 @@ namespace WCcashregister {
 	private: System::Windows::Forms::Button^  button18;
 	private: System::Windows::Forms::Button^  button22;
 	private: System::Windows::Forms::Label^  label2;
-
-
-
+	private: System::Windows::Forms::Label^  label3;
 
 	private:
 		/// <summary>
@@ -109,7 +94,7 @@ namespace WCcashregister {
 			this->button10 = (gcnew System::Windows::Forms::Button());
 			this->button11 = (gcnew System::Windows::Forms::Button());
 			this->button12 = (gcnew System::Windows::Forms::Button());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
+			this->textBox = (gcnew System::Windows::Forms::TextBox());
 			this->button13 = (gcnew System::Windows::Forms::Button());
 			this->button14 = (gcnew System::Windows::Forms::Button());
 			this->label1 = (gcnew System::Windows::Forms::Label());
@@ -126,6 +111,7 @@ namespace WCcashregister {
 			this->button19 = (gcnew System::Windows::Forms::Button());
 			this->button18 = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -276,17 +262,17 @@ namespace WCcashregister {
 			this->button12->UseVisualStyleBackColor = true;
 			this->button12->Click += gcnew System::EventHandler(this, &Cash_register_UI::button12_Click);
 			// 
-			// textBox1
+			// textBox
 			// 
-			this->textBox1->BackColor = System::Drawing::SystemColors::Window;
-			this->textBox1->Font = (gcnew System::Drawing::Font(L"Gadugi", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+			this->textBox->BackColor = System::Drawing::SystemColors::Window;
+			this->textBox->Font = (gcnew System::Drawing::Font(L"Gadugi", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->textBox1->Location = System::Drawing::Point(63, 31);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(396, 43);
-			this->textBox1->TabIndex = 12;
-			this->textBox1->Text = L"0";
-			this->textBox1->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
+			this->textBox->Location = System::Drawing::Point(63, 31);
+			this->textBox->Name = L"textBox";
+			this->textBox->Size = System::Drawing::Size(396, 43);
+			this->textBox->TabIndex = 12;
+			this->textBox->Text = L"0";
+			this->textBox->TextAlign = System::Windows::Forms::HorizontalAlignment::Right;
 			// 
 			// button13
 			// 
@@ -470,18 +456,30 @@ namespace WCcashregister {
 			this->label2->Size = System::Drawing::Size(0, 13);
 			this->label2->TabIndex = 20;
 			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label3->Location = System::Drawing::Point(928, 545);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(54, 25);
+			this->label3->TabIndex = 21;
+			this->label3->Text = L"Here";
+			// 
 			// Cash_register_UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1270, 663);
+			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->groupBox3);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->groupBox2);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->textBox1);
+			this->Controls->Add(this->textBox);
 			this->Controls->Add(this->button10);
 			this->Controls->Add(this->button11);
 			this->Controls->Add(this->button12);
@@ -496,7 +494,6 @@ namespace WCcashregister {
 			this->Controls->Add(this->button1);
 			this->Name = L"Cash_register_UI";
 			this->Text = L"Cash_register_UI";
-			this->Load += gcnew System::EventHandler(this, &Cash_register_UI::Cash_register_UI_Load);
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->EndInit();
@@ -517,13 +514,13 @@ namespace WCcashregister {
 private: System::Void Buttons_clicked(System::Object^  sender, System::EventArgs^  e) {
 	Button ^ Numbers = safe_cast<Button^>(sender);
 
-	if (textBox1->Text == "0")
+	if (textBox->Text == "0")
 	{
-		textBox1->Text = Numbers->Text;
+		textBox->Text = Numbers->Text;
 	}
 	else
 	{
-		textBox1->Text = textBox1->Text + Numbers->Text;
+		textBox ->Text = textBox->Text + Numbers->Text;
 	}
 }
 
@@ -531,62 +528,89 @@ private: System::Void Operations(System::Object^  sender, System::EventArgs^  e)
 
 	Button ^ Ops = safe_cast<Button^>(sender);
 
-	first_num = Double::Parse(textBox1->Text);
-	textBox1->Text = "";
+	first_num = Double::Parse(textBox->Text);
+	textBox ->Text = "";
 	operators = Ops->Text;
 	label2->Text = System::Convert::ToString(first_num) + " " + operators;
 }
 
 private: System::Void button10_Click(System::Object^  sender, System::EventArgs^  e) {
-	textBox1->Text = "0";
+	textBox->Text = "0";
 	label2->Text = "";
 }
 
 private: System::Void button22_Click(System::Object^  sender, System::EventArgs^  e) {
 	label2->Text = "";
-	second_num = Double::Parse(textBox1->Text);
+	second_num = Double::Parse(textBox->Text);
 
 	if (operators == "+")
 	{
 		result = first_num + second_num;
-		textBox1->Text = System::Convert::ToString(result);
+		textBox->Text = System::Convert::ToString(result);
 	}
 	else if (operators == "-")
 	{
 		result = first_num - second_num;
-		textBox1->Text = System::Convert::ToString(result);
+		textBox->Text = System::Convert::ToString(result);
 	}
 	else if (operators == "*")
 	{
 		result = first_num * second_num;
-		textBox1->Text = System::Convert::ToString(result);
+		textBox->Text = System::Convert::ToString(result);
 	}
 	else if (operators == "/")
 	{
 		result = first_num / second_num;
-		textBox1->Text = System::Convert::ToString(result);
+		textBox->Text = System::Convert::ToString(result);
 	}
 }
 
 private: System::Void button12_Click(System::Object^  sender, System::EventArgs^  e) {
-	if (!textBox1->Text->Contains("."))
+	if (!textBox->Text->Contains("."))
 	{
-		textBox1->Text = textBox1->Text + ".";
+		textBox->Text = textBox->Text + ".";
 	}
 }
 
-private: System::Void Cash_register_UI_Load(System::Object^  sender, System::EventArgs^  e) {
-	textBox1->Text = Tax_Val;
-}
+// More variables - Passing data between forms
+private: Add_Tax^ AT;	
+double tax_rate;
+double res_with_tax;
+bool Tax_pressed = false;
 
 private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) {
-	if (textBox1->Text == "0");
+	if (textBox->Text == "0");	// Do not open Tax window if value on calculator is $0.00
 	else
 	{
-		Add_Tax^ new_window = gcnew Add_Tax();
-		new_window->ShowDialog();
+		this->AT = gcnew Add_Tax();
+
+		// Main becomes subscriber to child window
+		this->AT->myEvent1 += gcnew Add_Tax::EventDelegate1(this, &WCcashregister::Cash_register_UI::mySubscriber1a);
+		this->AT->Show();
+
+		Tax_pressed = true;
 	}
 }
+
+// Main subscriber for form 2 and event handlers (declared above)
+private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, String^ text)
+	{
+	if (Tax_pressed == true)
+	{
+		//this->label3->Text = text;	// Display message from child 1
+		tax_rate = Convert::ToDouble(text);
+		tax_rate /= 100;
+		result = Convert::ToDouble(textBox->Text);
+
+		res_with_tax = (result + (result * tax_rate));
+
+		// Display added tax
+		this->label3->Text = "Tax added to total: " + (result * tax_rate);
+		this->textBox->Text = Convert::ToString(res_with_tax);
+	}
+
+
+	}
 
 };
 }
