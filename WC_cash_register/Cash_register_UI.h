@@ -11,6 +11,7 @@ namespace WCcashregister {
 	using namespace System::Windows::Forms;
 	using namespace System::Data;
 	using namespace System::Drawing;
+	using namespace MySql::Data::MySqlClient;
 
 	/// <summary>
 	/// Summary for Cash_register_UI
@@ -69,6 +70,10 @@ namespace WCcashregister {
 	private: System::Windows::Forms::Button^  button22;
 	private: System::Windows::Forms::Label^  label2;
 	private: System::Windows::Forms::Label^  label3;
+	private: System::Windows::Forms::Button^  button23;
+	private: System::Windows::Forms::Label^  label4;
+	private: System::Windows::Forms::Label^  label5;
+	private: System::Windows::Forms::Label^  label6;
 
 	private:
 		/// <summary>
@@ -114,6 +119,10 @@ namespace WCcashregister {
 			this->button18 = (gcnew System::Windows::Forms::Button());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->button23 = (gcnew System::Windows::Forms::Button());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->label6 = (gcnew System::Windows::Forms::Label());
 			this->groupBox1->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox1))->BeginInit();
@@ -280,12 +289,13 @@ namespace WCcashregister {
 			// 
 			this->button13->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 20.25F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->button13->Location = System::Drawing::Point(6, 19);
+			this->button13->Location = System::Drawing::Point(4, 19);
 			this->button13->Name = L"button13";
 			this->button13->Size = System::Drawing::Size(183, 49);
 			this->button13->TabIndex = 13;
 			this->button13->Text = L"Add Item";
 			this->button13->UseVisualStyleBackColor = true;
+			this->button13->Click += gcnew System::EventHandler(this, &Cash_register_UI::button13_Click);
 			// 
 			// button14
 			// 
@@ -297,6 +307,7 @@ namespace WCcashregister {
 			this->button14->TabIndex = 14;
 			this->button14->Text = L"Total";
 			this->button14->UseVisualStyleBackColor = true;
+			this->button14->Click += gcnew System::EventHandler(this, &Cash_register_UI::button14_Click);
 			// 
 			// label1
 			// 
@@ -354,6 +365,7 @@ namespace WCcashregister {
 			this->button15->TabIndex = 13;
 			this->button15->Text = L"Remove";
 			this->button15->UseVisualStyleBackColor = true;
+			this->button15->Click += gcnew System::EventHandler(this, &Cash_register_UI::button15_Click);
 			// 
 			// button16
 			// 
@@ -464,16 +476,62 @@ namespace WCcashregister {
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label3->Location = System::Drawing::Point(676, 556);
+			this->label3->Location = System::Drawing::Point(669, 521);
 			this->label3->Name = L"label3";
 			this->label3->Size = System::Drawing::Size(0, 25);
 			this->label3->TabIndex = 21;
+			// 
+			// button23
+			// 
+			this->button23->Font = (gcnew System::Drawing::Font(L"Monotype Corsiva", 15, static_cast<System::Drawing::FontStyle>((System::Drawing::FontStyle::Bold | System::Drawing::FontStyle::Italic)),
+				System::Drawing::GraphicsUnit::Point, static_cast<System::Byte>(0)));
+			this->button23->Location = System::Drawing::Point(500, 31);
+			this->button23->Name = L"button23";
+			this->button23->Size = System::Drawing::Size(114, 45);
+			this->button23->TabIndex = 22;
+			this->button23->Text = L"Statistics";
+			this->button23->UseVisualStyleBackColor = true;
+			this->button23->Click += gcnew System::EventHandler(this, &Cash_register_UI::button23_Click);
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label4->Location = System::Drawing::Point(669, 550);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(0, 25);
+			this->label4->TabIndex = 23;
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label5->Location = System::Drawing::Point(669, 582);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(0, 25);
+			this->label5->TabIndex = 24;
+			// 
+			// label6
+			// 
+			this->label6->AutoSize = true;
+			this->label6->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->label6->Location = System::Drawing::Point(669, 615);
+			this->label6->Name = L"label6";
+			this->label6->Size = System::Drawing::Size(0, 25);
+			this->label6->TabIndex = 25;
 			// 
 			// Cash_register_UI
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(1270, 663);
+			this->Controls->Add(this->label6);
+			this->Controls->Add(this->label5);
+			this->Controls->Add(this->label4);
+			this->Controls->Add(this->button23);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->groupBox3);
@@ -541,7 +599,12 @@ private: System::Void Operations(System::Object^  sender, System::EventArgs^  e)
 private: System::Void button10_Click(System::Object^  sender, System::EventArgs^  e) {
 	textBox->Text = "0";
 	label2->Text = "";
+
+	// Clear stats data
 	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
 }
 
 private: System::Void button22_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -584,8 +647,17 @@ private: Discount^ Dis;
 double tax_rate, discount_rate;
 double res_with_tax, res_with_discount;
 bool Tax_pressed, Discount_pressed = false;
+double db_result, db_asset, db_defecit, db_temp;
+int last_num_db;
+double sum_assets, sum_defecits, sum_total;
 
 private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) { 
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
 	if (textBox->Text == "0");	// Do not open Tax window if value on calculator is $0.00
 	else
 	{
@@ -602,6 +674,12 @@ private: System::Void button16_Click(System::Object^  sender, System::EventArgs^
 // Main subscriber for form 2 and event handlers (declared above)
 private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, String^ text)
 	{
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
 	if (Tax_pressed == true)
 	{
 		//this->label3->Text = text;	// Display message from child 1
@@ -616,7 +694,7 @@ private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, Strin
 
 		// Display added tax
 		this->label3->Text = "Tax added to total: $" + (result * tax_rate);
-		this->textBox->Text = "$" + Convert::ToString(res_with_tax);
+		this->textBox->Text = Convert::ToString(res_with_tax);
 		
 		Tax_pressed = false;
 	}
@@ -633,7 +711,7 @@ private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, Strin
 
 		// Display added tax
 		this->label3->Text = "Discount reduced from total: $" + (result * discount_rate);
-		this->textBox->Text = "$" + Convert::ToString(res_with_discount);
+		this->textBox->Text = Convert::ToString(res_with_discount);
 
 		Discount_pressed = false;
 	}
@@ -642,6 +720,12 @@ private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, Strin
 	}
 
 private: System::Void button17_Click(System::Object^  sender, System::EventArgs^  e) {
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
 	if (textBox->Text == "0");	// Do not open Discount window if value on calculator is $0.00
 	else
 	{
@@ -665,6 +749,105 @@ private: System::Void Exit_Program(System::Object^  sender, System::Windows::For
 	{
 		e->Cancel = true;	// Cancel the shutdown
 	}
+}
+
+private: System::Void button23_Click(System::Object^  sender, System::EventArgs^  e) {
+		String ^ constring = L"datasource = 127.0.0.1; port = 3306; username = wc_data; password = womens_club";
+		MySqlConnection ^ conDatabase = gcnew MySqlConnection(constring);
+		MySqlCommand ^ cmdDataBase = gcnew MySqlCommand("SELECT * FROM `women_center_db`.`wc_data`;", conDatabase);
+		MySqlDataReader ^ myReader;
+
+		try
+		{
+			conDatabase->Open();
+			myReader = cmdDataBase->ExecuteReader();
+			while (myReader->Read())
+			{
+				last_num_db = (myReader->GetInt32(0));
+				sum_assets += (myReader->GetDouble(1));
+				sum_defecits += (myReader->GetDouble(2));
+				sum_total += (myReader->GetDouble(3));
+			}
+
+			label3->Text = "The current number of entries in the database: " + last_num_db;
+			label4->Text = "Total Assets: $" + sum_assets;
+			label5->Text = "Total Deficits: $" + sum_defecits;
+			label6->Text = "Total money earned: $" + sum_total;
+		}
+		catch (Exception ^ ex)
+		{
+			MessageBox::Show(ex->Message);
+		}
+}
+
+private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
+	// Pull the current price from the screen
+	db_temp = Convert::ToDouble(textBox->Text);
+
+	// Update the db_asset value and show the most updated value
+	db_asset += db_temp;
+	label3->Text = ("Current charges: $" + Convert::ToString(db_asset));
+
+	// Reset the register to '0'.
+	textBox->Text = "0";
+}
+
+private: System::Void button14_Click(System::Object^  sender, System::EventArgs^  e) {
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
+	// Calculate values
+	db_result = (db_asset - db_defecit);
+
+	// Connections to database - push values
+	String ^ constring = L"datasource = 127.0.0.1; port = 3306; username = wc_data; password = womens_club";
+	MySqlConnection ^ conDatabase = gcnew MySqlConnection(constring);
+	MySqlCommand ^ cmdDataBase = gcnew MySqlCommand("INSERT INTO `women_center_db`.`wc_data` (`sale_number`, `assets`, `defecits`, `total`) VALUES (NULL, '" + this->db_asset + "', '"+ this->db_defecit +"', '"+ this->db_result +"');", conDatabase);
+	MySqlDataReader ^ myReader;
+
+	// Show the final value the customer owes.
+	label3->Text = ("Total Due: $ " + Convert::ToString(db_result));
+
+	// Reset values
+	db_asset = 0;
+	db_defecit = 0;
+	db_result = 0;
+
+	try
+	{
+		conDatabase->Open();
+		myReader = cmdDataBase->ExecuteReader();
+	}
+	catch (Exception ^ ex)
+	{
+		MessageBox::Show(ex->Message);
+	}
+}
+private: System::Void button15_Click(System::Object^  sender, System::EventArgs^  e) {
+	// Clear stats data
+	label3->Text = "";
+	label4->Text = "";
+	label5->Text = "";
+	label6->Text = "";
+
+	// Pull the current price from the screen
+	db_temp = Convert::ToDouble(textBox->Text);
+
+	// Update the db_defecit value and show the most updated value
+	db_defecit += db_temp;
+	label3->Text = ("Current savings: $" + Convert::ToString(db_defecit));
+
+	// Reset the register to '0'.
+	textBox->Text = "0";
 }
 };
 }
