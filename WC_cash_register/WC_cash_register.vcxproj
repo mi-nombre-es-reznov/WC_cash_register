@@ -132,7 +132,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <Reference Include="MySql.Data, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
+    <Reference Include="MySql.Data">
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 8.0.17\Assemblies\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -143,6 +145,7 @@
     <ClCompile Include="Add_Tax.cpp" />
     <ClCompile Include="Cash_register_UI.cpp" />
     <ClCompile Include="Discount.cpp" />
+    <ClCompile Include="IP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Tax.h">
@@ -152,6 +155,9 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Discount.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="IP.h">
       <FileType>CppForm</FileType>
     </ClInclude>
   </ItemGroup>
@@ -164,6 +170,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Discount.resx">
       <DependentUpon>Discount.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IP.resx">
+      <DependentUpon>IP.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

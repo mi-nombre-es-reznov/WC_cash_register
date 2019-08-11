@@ -24,6 +24,9 @@
     <ClCompile Include="Discount.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="IP.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cash_register_UI.h">
@@ -35,6 +38,9 @@
     <ClInclude Include="Discount.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Cash_register_UI.resx">
@@ -44,6 +50,9 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="Discount.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IP.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>
