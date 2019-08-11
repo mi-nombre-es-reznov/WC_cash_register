@@ -858,6 +858,8 @@ private: System::Void button23_Click(System::Object^  sender, System::EventArgs^
 		{
 			MessageBox::Show(ex->Message);
 		}
+
+		sum_assets = sum_defecits = sum_total = 0;
 }
 
 private: System::Void button13_Click(System::Object^  sender, System::EventArgs^  e) {
