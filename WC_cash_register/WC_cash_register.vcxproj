@@ -143,18 +143,26 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Add_Tax.cpp" />
+    <ClCompile Include="Calculate_data.cpp" />
     <ClCompile Include="Cash_register_UI.cpp" />
     <ClCompile Include="Discount.cpp" />
+    <ClCompile Include="Get_Name.cpp" />
     <ClCompile Include="IP.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Add_Tax.h">
       <FileType>CppForm</FileType>
     </ClInclude>
+    <ClInclude Include="Calculate_data.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Cash_register_UI.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Discount.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
+    <ClInclude Include="Get_Name.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="IP.h">
@@ -165,11 +173,17 @@
     <EmbeddedResource Include="Add_Tax.resx">
       <DependentUpon>Add_Tax.h</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Calculate_data.resx">
+      <DependentUpon>Calculate_data.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cash_register_UI.resx">
       <DependentUpon>Cash_register_UI.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Discount.resx">
       <DependentUpon>Discount.h</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Get_Name.resx">
+      <DependentUpon>Get_Name.h</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="IP.resx">
       <DependentUpon>IP.h</DependentUpon>
