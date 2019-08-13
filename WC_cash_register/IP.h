@@ -18,7 +18,7 @@ namespace WCcashregister {
 	// for the subscriber (main form) who listens to these events
 
 	// Event IP address, username, and password
-	public: delegate void EventDelegate3(System::Object^ sender, System::EventArgs^ e, String^ ip, String^ un, String^ pw, String^ port);	// Publish an event with a text message that others can subscribe to
+	public: delegate void EventDelegate3(System::Object^ sender, System::EventArgs^ e, String^ ip, String^ un, String^ pw, int port);	// Publish an event with a text message that others can subscribe to
 	public: event EventDelegate3^ myEvent3;
 
 	public:
@@ -97,7 +97,6 @@ namespace WCcashregister {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(116, 20);
 			this->textBox1->TabIndex = 1;
-			this->textBox1->Text = L"0";
 			// 
 			// label1
 			// 
@@ -148,7 +147,6 @@ namespace WCcashregister {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(116, 20);
 			this->textBox2->TabIndex = 6;
-			this->textBox2->Text = L"0";
 			// 
 			// label4
 			// 
@@ -167,7 +165,6 @@ namespace WCcashregister {
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(116, 20);
 			this->textBox3->TabIndex = 8;
-			this->textBox3->Text = L"0";
 			// 
 			// label5
 			// 
@@ -186,7 +183,6 @@ namespace WCcashregister {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(116, 20);
 			this->textBox4->TabIndex = 10;
-			this->textBox4->Text = L"0";
 			// 
 			// IP
 			// 
@@ -222,11 +218,14 @@ namespace WCcashregister {
 
 	private: System::Void IP_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->textBox1->Text = "0";
+		this->textBox2->Text = "0";
+		this->textBox3->Text = "0";
+		this->textBox4->Text = "0";
 	}
 
 	public: void issueEvent3(System::Object^ sender, System::EventArgs^ e)	// This is where we publish the event to all.
 	{
-		this->myEvent3(this, e, this->textBox1->Text, this->textBox2->Text, this->textBox3->Text, this->textBox4->Text);	// Raise the event using event delegate signature
+		this->myEvent3(this, e, this->textBox1->Text, this->textBox2->Text, this->textBox3->Text, Convert::ToInt32(this->textBox4->Text));	// Raise the event using event delegate signature
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -253,7 +252,6 @@ namespace WCcashregister {
 		if (flag_ip == true && flag_un == true && flag_pw == true && flag_port)
 		{
 			this->issueEvent3(sender, e);
-			MessageBox::Show("Data entered");
 			this->Close();
 		}
 		else
