@@ -97,7 +97,6 @@ namespace WCcashregister {
 			this->textBox1->Name = L"textBox1";
 			this->textBox1->Size = System::Drawing::Size(116, 20);
 			this->textBox1->TabIndex = 1;
-			this->textBox1->Text = L"0";
 			// 
 			// label1
 			// 
@@ -148,7 +147,6 @@ namespace WCcashregister {
 			this->textBox2->Name = L"textBox2";
 			this->textBox2->Size = System::Drawing::Size(116, 20);
 			this->textBox2->TabIndex = 6;
-			this->textBox2->Text = L"0";
 			// 
 			// label4
 			// 
@@ -167,7 +165,6 @@ namespace WCcashregister {
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(116, 20);
 			this->textBox3->TabIndex = 8;
-			this->textBox3->Text = L"0";
 			// 
 			// label5
 			// 
@@ -186,7 +183,6 @@ namespace WCcashregister {
 			this->textBox4->Name = L"textBox4";
 			this->textBox4->Size = System::Drawing::Size(116, 20);
 			this->textBox4->TabIndex = 10;
-			this->textBox4->Text = L"0";
 			// 
 			// IP
 			// 
