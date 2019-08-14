@@ -876,7 +876,7 @@ private: void mySubscriber4a(System::Object^ sender, System::EventArgs^ e, Strin
 	String^ filename = "C://Users//" + computer + "//Documents//wc_excel_files//" + file_type + ".csv";
 	fstream calc;
 //	calc.open("C://Users//xXSexyBeastXx//Documents//wc_excel_files//test.csv", ios::in); //<-- Returns void
-	calc.open(filename, ios::in); //<-- Returns void
+	calc.open(L'"filename"', ios::in); //<-- Returns void
 	if (!calc) //<-- operator!
 	{/*failed*/
 		MessageBox::Show("Failed to open!");
