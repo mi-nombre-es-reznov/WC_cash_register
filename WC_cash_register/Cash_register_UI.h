@@ -1,14 +1,19 @@
 #pragma once
+// Files to add to program
 #include "Add_Tax.h"
 #include "Discount.h"
 #include "IP.h"
 #include "Get_Name.h"
-#include "Calculate_data.h"
-#include <fstream>
+#include "Calculate_files.h"
+#include "Get_Calc_comp_name.h"
+#include "Get_Calc_file_name.h"
+#include "Password_checker.h"
+
+// Preheaders
 #include <math.h>
+#include <iostream>
 
 namespace WCcashregister {
-
 	using namespace System;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
@@ -17,6 +22,8 @@ namespace WCcashregister {
 	using namespace System::Drawing;
 	using namespace MySql::Data::MySqlClient;
 	using namespace std;
+	using namespace System::Diagnostics;
+
 
 	/// <summary>
 	/// Summary for Cash_register_UI
@@ -663,6 +670,7 @@ private: System::Void button10_Click(System::Object^  sender, System::EventArgs^
 	label4->Text = "";
 	label5->Text = "";
 	label6->Text = "";
+	total_a = total_b = total_c = total_d = 0;
 }
 
 private: System::Void button22_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -703,12 +711,15 @@ private: Add_Tax^ AT;
 private: Discount^ Dis;
 private: IP^ IP_address;
 private: Get_Name^ Save;
-private: Calculate_data^ excel_loc;
+private: Get_Calc_comp_name^ comp_name;
+private: Get_Calc_file_name^ file_names;
+private: Password_checker^ pw_check;
 
 double tax_rate, discount_rate;
 double res_with_tax, res_with_discount;
-bool Tax_pressed, Discount_pressed, IP_pressed, Get_Name_pressed = false;
+bool Tax_pressed, Discount_pressed, IP_pressed, Get_Name_pressed, Get_Calc_comp_name_pressed, Get_Calc_file_name_pressed, ready, get_file, pw_pressed, valid = false;
 double db_result, db_asset, db_defecit, db_temp;
+double total_a = 0, total_b = 0, total_c = 0, total_d = 0;
 int last_num_db;
 double sum_assets, sum_defecits, sum_total;
 String^ IP_addr;
@@ -718,6 +729,7 @@ String^ file_name = "";
 String^ computer = "";
 int port;
 String^ file_type;
+String^ password;
 
 private: System::Void button16_Click(System::Object^  sender, System::EventArgs^  e) { 
 	// Clear stats data
@@ -793,6 +805,35 @@ private: void mySubscriber1a(System::Object^ sender, System::EventArgs^ e, Strin
 		file_name = text;
 		Get_Name_pressed = false;
 	}
+	else if (Get_Calc_comp_name_pressed == true)
+	{
+		computer = text;
+		Get_Calc_comp_name_pressed = false;
+		ready = true;
+	}
+	else if (Get_Calc_file_name_pressed == true)
+	{
+		file_name = text;
+		Get_Calc_file_name_pressed = false;
+		get_file = true;
+	}
+	else if (pw_pressed == true)
+	{
+		password = text;
+		pw_pressed = false;
+
+		if (password == "women's club")
+		{
+			valid = true;
+		}
+		else
+		{
+			valid = false;
+
+			// Incorrect password
+			MessageBox::Show("Password incorrect!");
+		}
+	}
 }
 
 private: void mySubscriber2a(System::Object^ sender, System::EventArgs^ e, String^ ip, String^ un, String^ pw, int port_num)
@@ -859,31 +900,6 @@ private: void mySubscriber3a(System::Object^ sender, System::EventArgs^ e, Strin
 		{
 			MessageBox::Show(ex->Message);
 		}
-	}
-}
-
-private: void mySubscriber4a(System::Object^ sender, System::EventArgs^ e, String^ file, String^ comp_name)
-{
-	// Clear stats data
-	label3->Text = "";
-	label4->Text = "";
-	label5->Text = "";
-	label6->Text = "";
-
-	file_type = file;
-	computer = comp_name;
-
-	String^ filename = "C://Users//" + computer + "//Documents//wc_excel_files//" + file_type + ".csv";
-	fstream calc;
-//	calc.open("C://Users//xXSexyBeastXx//Documents//wc_excel_files//test.csv", ios::in); //<-- Returns void
-	calc.open(L'"filename"', ios::in); //<-- Returns void
-	if (!calc) //<-- operator!
-	{/*failed*/
-		MessageBox::Show("Failed to open!");
-	}
-	else
-	{/*Succeeded*/
-		MessageBox::Show("Successfully opened!");
 	}
 }
 
@@ -1039,34 +1055,49 @@ private: System::Void button24_Click(System::Object^  sender, System::EventArgs^
 	IP_pressed = true;
 }
 private: System::Void button25_Click(System::Object^  sender, System::EventArgs^  e) {
-	// Clear stats data
-	label3->Text = "";
-	label4->Text = "";
-	label5->Text = "";
-	label6->Text = "";
-
-	// Connections to database - push values
-	String ^ constring = L"datasource = '" + IP_addr + "'; port = '" + port + "'; username = '" + User + "'; password = '" + PW + "'";
-	MySqlConnection ^ conDatabase = gcnew MySqlConnection(constring);
-	MySqlCommand ^ cmdDataBase = gcnew MySqlCommand("TRUNCATE `women_center_db`.`wc_data`", conDatabase);
-	MySqlDataReader ^ myReader;
-
-	// Reset values
-	db_asset = 0;
-	db_defecit = 0;
-	db_result = 0;
-
-	try
+	if (valid == true)
 	{
-		conDatabase->Open();
-		myReader = cmdDataBase->ExecuteReader();
-		MessageBox::Show("Database deleted successfully!");
+		// Clear stats data
+		label3->Text = "";
+		label4->Text = "";
+		label5->Text = "";
+		label6->Text = "";
+
+		// Connections to database - push values
+		String ^ constring = L"datasource = '" + IP_addr + "'; port = '" + port + "'; username = '" + User + "'; password = '" + PW + "'";
+		MySqlConnection ^ conDatabase = gcnew MySqlConnection(constring);
+		MySqlCommand ^ cmdDataBase = gcnew MySqlCommand("TRUNCATE `women_center_db`.`wc_data`", conDatabase);
+		MySqlDataReader ^ myReader;
+
+		// Reset values
+		db_asset = 0;
+		db_defecit = 0;
+		db_result = 0;
+
+		try
+		{
+			conDatabase->Open();
+			myReader = cmdDataBase->ExecuteReader();
+			MessageBox::Show("Database deleted successfully!");
+		}
+		catch (Exception ^ ex)
+		{
+			MessageBox::Show(ex->Message);
+		}
 	}
-	catch (Exception ^ ex)
+	else
 	{
-		MessageBox::Show(ex->Message);
+		this->pw_check = gcnew Password_checker();
+
+		// Main becomes subscriber to child window
+		this->pw_check->myEvent8 += gcnew Password_checker::EventDelegate8(this, &WCcashregister::Cash_register_UI::mySubscriber1a);
+
+		this->pw_check->Show();
+
+		pw_pressed = true;
 	}
 }
+
 private: System::Void button26_Click(System::Object^  sender, System::EventArgs^  e) {
 	this->Save = gcnew Get_Name();
 
@@ -1076,15 +1107,82 @@ private: System::Void button26_Click(System::Object^  sender, System::EventArgs^
 	this->Save->Show();
 }
 
-private: System::Void button27_Click(System::Object^  sender, System::EventArgs^  e) {
-	this->excel_loc = gcnew Calculate_data();
-
-	// Main becomes subscriber to child window
-	this->excel_loc->myEvent5 += gcnew Calculate_data::EventDelegate5(this, &WCcashregister::Cash_register_UI::mySubscriber4a);
-
-	this->excel_loc->Show();
-
+// Used to create a standard string (std::string) from a System string (System::string)
+void MarshalString(String ^ s, string& os) {
+	using namespace Runtime::InteropServices;
+	const char* chars =
+		(const char*)(Marshal::StringToHGlobalAnsi(s)).ToPointer();
+	os = chars;
+	Marshal::FreeHGlobal(IntPtr((void*)chars));
 }
+
+private: System::Void button27_Click(System::Object^  sender, System::EventArgs^  e) {
+	if (ready == true && get_file == true)
+	{
+		// ---------------------------------------	\\
+		// Send data to be processed in background	\\
+		// ---------------------------------------	\\
+		
+		// Create an instance of the class from the console application
+		Calculate test;
+		string bob;
+
+		// Convert from System string -> std string
+		string computer_str, file_name_str;
+		double sub_total_a = 0, sub_total_b = 0, sub_total_c = 0, sub_total_d = 0;
+		MarshalString(computer, computer_str);
+		MarshalString(file_name, file_name_str);
+//		textBox->Text = computer;
+
+		// Get results from file
+		sub_total_a = test.total(computer_str, file_name_str, 'a');
+		sub_total_b = test.total(computer_str, file_name_str, 'b');
+		sub_total_c = test.total(computer_str, file_name_str, 'c');
+		sub_total_d = test.total(computer_str, file_name_str, 'd');
+
+		// Check if error, reset values to 0
+		if (sub_total_a == -99.99 && sub_total_b == -99.99 && sub_total_c == -99.99 && sub_total_d == -99.99)
+		{
+			sub_total_a = sub_total_b = sub_total_c = sub_total_d = 0;
+		}
+
+		// Save in total slot
+		total_a += sub_total_a;
+		total_b += sub_total_b;
+		total_c += sub_total_c;
+		total_d += sub_total_d;
+
+		// Show totals at bottom
+		label3->Text = "Total clients (sales): " + Convert::ToString(total_a);
+		label4->Text = "Total assets: $" + Convert::ToString(total_b);
+		label5->Text = "Total defecits: $" + Convert::ToString(total_c);
+		label6->Text = "Total money earned: $" + Convert::ToString(total_d);
+
+		// Reset flag for another file
+		get_file = false;
+	}
+	else if (ready == true && get_file == false)
+	{
+		this->file_names = gcnew Get_Calc_file_name();
+
+		// Main becomes subscriber to child window
+		this->file_names->myEvent7 += gcnew Get_Calc_file_name::EventDelegate7(this, &WCcashregister::Cash_register_UI::mySubscriber1a);
+
+		this->file_names->Show();
+		Get_Calc_file_name_pressed = true;
+	}
+	else if(ready == false && get_file == false)
+	{
+		this->comp_name = gcnew Get_Calc_comp_name();
+
+		// Main becomes subscriber to child window
+		this->comp_name->myEvent6 += gcnew Get_Calc_comp_name::EventDelegate6(this, &WCcashregister::Cash_register_UI::mySubscriber1a);
+
+		this->comp_name->Show();
+		Get_Calc_comp_name_pressed = true;
+	}
+}
+
 };
 }
 

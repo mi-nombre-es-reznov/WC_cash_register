@@ -27,11 +27,20 @@
     <ClCompile Include="IP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Get_Name.cpp">
-      <Filter>Header Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Calculate_data.cpp">
+    <ClCompile Include="Calculate_files.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Get_Name.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Get_Calc_comp_name.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Get_Calc_file_name.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Password_checker.cpp">
+      <Filter>Header Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -50,7 +59,16 @@
     <ClInclude Include="Get_Name.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Calculate_data.h">
+    <ClInclude Include="Calculate_files.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Get_Calc_comp_name.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Get_Calc_file_name.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Password_checker.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -68,6 +86,12 @@
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="Get_Name.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Get_Calc_comp_name.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Get_Calc_file_name.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
   </ItemGroup>

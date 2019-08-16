@@ -12,15 +12,15 @@ namespace WCcashregister {
 	/// <summary>
 	/// Summary for Add_Tax
 	/// </summary>
-	public ref class Calculate_data : public System::Windows::Forms::Form
+	public ref class Get_Calc_comp_name : public System::Windows::Forms::Form
 	{
 		// Public events (using delegates) are declared here in order to publish strings 
 		// for the subscriber (main form) who listens to these events
-	public: delegate void EventDelegate5(System::Object^ sender, System::EventArgs^ e, String^ save_name, String^ Comp_name);	// Publish an event with a text message that others can subscribe to
-	public: event EventDelegate5^ myEvent5;
+	public: delegate void EventDelegate6(System::Object^ sender, System::EventArgs^ e, String^ message);	// Publish an event with a text message that others can subscribe to
+	public: event EventDelegate6^ myEvent6;
 
 	public:
-		Calculate_data(void)
+		Get_Calc_comp_name(void)
 		{
 			InitializeComponent();
 			//
@@ -32,7 +32,7 @@ namespace WCcashregister {
 		/// <summary>
 		/// Clean up any resources being used.
 		/// </summary>
-		~Calculate_data()
+		~Get_Calc_comp_name()
 		{
 			if (components)
 			{
@@ -46,8 +46,6 @@ namespace WCcashregister {
 
 	private: System::Windows::Forms::Button^  button2;
 	private: System::Windows::Forms::Label^  label3;
-	private: System::Windows::Forms::Label^  label2;
-	private: System::Windows::Forms::TextBox^  textBox2;
 
 	private:
 		/// <summary>
@@ -67,8 +65,6 @@ namespace WCcashregister {
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->button2 = (gcnew System::Windows::Forms::Button());
 			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->SuspendLayout();
 			// 
 			// button1
@@ -79,13 +75,13 @@ namespace WCcashregister {
 			this->button1->TabIndex = 0;
 			this->button1->Text = L"Cancel";
 			this->button1->UseVisualStyleBackColor = true;
-			this->button1->Click += gcnew System::EventHandler(this, &Calculate_data::button1_Click);
+			this->button1->Click += gcnew System::EventHandler(this, &Get_Calc_comp_name::button1_Click);
 			// 
 			// textBox1
 			// 
-			this->textBox1->Location = System::Drawing::Point(258, 134);
+			this->textBox1->Location = System::Drawing::Point(235, 128);
 			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(145, 20);
+			this->textBox1->Size = System::Drawing::Size(188, 20);
 			this->textBox1->TabIndex = 1;
 			// 
 			// label1
@@ -93,11 +89,11 @@ namespace WCcashregister {
 			this->label1->AutoSize = true;
 			this->label1->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label1->Location = System::Drawing::Point(135, 134);
+			this->label1->Location = System::Drawing::Point(70, 128);
 			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(115, 16);
+			this->label1->Size = System::Drawing::Size(158, 16);
 			this->label1->TabIndex = 2;
-			this->label1->Text = L"Enter file name:";
+			this->label1->Text = L"Enter computer name:";
 			// 
 			// button2
 			// 
@@ -107,81 +103,58 @@ namespace WCcashregister {
 			this->button2->TabIndex = 4;
 			this->button2->Text = L"Submit";
 			this->button2->UseVisualStyleBackColor = true;
-			this->button2->Click += gcnew System::EventHandler(this, &Calculate_data::button2_Click);
+			this->button2->Click += gcnew System::EventHandler(this, &Get_Calc_comp_name::button2_Click);
 			// 
 			// label3
 			// 
 			this->label3->AutoSize = true;
 			this->label3->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 30, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->label3->Location = System::Drawing::Point(114, 70);
+			this->label3->Location = System::Drawing::Point(82, 58);
 			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(289, 46);
+			this->label3->Size = System::Drawing::Size(325, 46);
 			this->label3->TabIndex = 5;
-			this->label3->Text = L"Get File Name";
+			this->label3->Text = L"Computer Name";
 			// 
-			// label2
-			// 
-			this->label2->AutoSize = true;
-			this->label2->Font = (gcnew System::Drawing::Font(L"Microsoft Sans Serif", 9.75F, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
-				static_cast<System::Byte>(0)));
-			this->label2->Location = System::Drawing::Point(92, 162);
-			this->label2->Name = L"label2";
-			this->label2->Size = System::Drawing::Size(158, 16);
-			this->label2->TabIndex = 7;
-			this->label2->Text = L"Enter computer name:";
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(258, 162);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(145, 20);
-			this->textBox2->TabIndex = 6;
-			// 
-			// Get_Name
+			// Get_Calc_comp_name
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(491, 258);
-			this->Controls->Add(this->label2);
-			this->Controls->Add(this->textBox2);
 			this->Controls->Add(this->label3);
 			this->Controls->Add(this->button2);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->textBox1);
 			this->Controls->Add(this->button1);
-			this->Name = L"Get_Name";
-			this->Text = L"Load File";
-			this->Load += gcnew System::EventHandler(this, &Calculate_data::Add_Tax_Load);
+			this->Name = L"Get_Calc_comp_name";
+			this->Text = L"Get computer name";
+			this->Load += gcnew System::EventHandler(this, &Get_Calc_comp_name::Add_Tax_Load);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
-		double verify;
-
 	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
 		this->Close();
 	}
 
 	private: System::Void Add_Tax_Load(System::Object^  sender, System::EventArgs^  e) {
 		this->textBox1->Text = "0";
-		this->textBox2->Text = "0";
 	}
 
-	public: void issueEvent5(System::Object^ sender, System::EventArgs^ e)	// This is where we publish the event to all.
+	public: void issueEvent6(System::Object^ sender, System::EventArgs^ e)	// This is where we publish the event to all.
 	{
-		this->myEvent5(this, e, this->textBox1->Text, this->textBox2->Text);	// Raise the event using event delegate signature
+		this->myEvent6(this, e, this->textBox1->Text);	// Raise the event using event delegate signature
 	}
 
 	private: System::Void button2_Click(System::Object^  sender, System::EventArgs^  e) {
-		if (textBox1->Text == "0" || textBox2->Text == "0")	// Give a message of whether tax was added (requires > 0%) for a tax added message.
+		if (textBox1->Text == "0")	// Give a message of whether tax was added (requires > 0%) for a tax added message.
 		{
-			MessageBox::Show("File name invalid!");
+			MessageBox::Show("Computer name not valid!");
 		}
 		else
 		{
-			this->issueEvent5(sender, e);
+			this->issueEvent6(sender, e);
 			this->Close();	// Close the Tax window
 		}
 	}
